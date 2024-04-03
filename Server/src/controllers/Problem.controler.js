@@ -1,6 +1,9 @@
 const { StatusCodes } = require("http-status-codes");
-const NOT_IMPLEMENTED = require("../errors/NotImplemented");
 const NotImplemented = require("../errors/NotImplemented");
+const { ProblemsService } = require("../services");
+const { ProblemsRepository } = require("../repositories");
+
+const problemService = new ProblemsService(new ProblemsRepository());
 
 function pingProblemController(req, res) {
   // console.log("Ping contoller problems");
@@ -9,10 +12,17 @@ function pingProblemController(req, res) {
   });
 }
 
-function addProblem(req, res, next) {
+async function addProblem(req, res, next) {
   try {
-    throw new NotImplemented("add problem");
+    const { data } = req.body;
+    console.log("data from postman", data);
+    const problemCreation = await problemService.createProblem(data);
+    return res.status(StatusCodes.ACCEPTED).json({
+      message: "Problem Created",
+      questionId: problemCreation._id,
+    });
   } catch (error) {
+    console.log("error", error);
     next(error);
   }
 }
