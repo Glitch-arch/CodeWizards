@@ -4,8 +4,7 @@ class problemsService {
   constructor(problemRepository) {
     this.problemRepository = problemRepository;
   }
-  //   Add / create Problem
-  //   i/p -> service layer -> Store to DB
+
   async createProblem(problemData) {
     try {
       console.log("service layer data ", problemData);
@@ -17,6 +16,12 @@ class problemsService {
       console.log("Service error", error);
       throw new error();
     }
+  }
+
+  async getProblem(id) {
+    const problem = await this.problemRepository.getProblem(id);
+
+    return problem;
   }
 }
 

@@ -1,2 +1,4 @@
 /Server/.env
 /Server/node_modules
+/Evaluator-Service/node_modules
+/Evaluator-Service/tsOut
