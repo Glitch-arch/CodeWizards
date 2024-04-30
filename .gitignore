@@ -1,4 +1,4 @@
-/Server/.env
-/Server/node_modules
+/Problem-Service/.env
+/Problem-Service/node_modules
 /Evaluator-Service/node_modules
 /Evaluator-Service/Dist
