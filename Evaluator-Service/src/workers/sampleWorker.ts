@@ -1,15 +1,18 @@
 import { Job, Worker } from "bullmq";
-import sampleJob from "../jobs/sample.Job";
-import redisConnection from "../config/redis.config";
 
-export const sampleWorker = (queueName: string) => {
+import redisConnection from "../config/redis.config";
+import sampleJob from "../jobs/sample.Job";
+
+export default function sampleWorker(queueName: string) {
     new Worker(
-        queueName,
+        queueName, 
         async (job: Job) => {
-            console.log("Sample job worker kicking", job);
-            if (job.name === "sampleJob") {
+            console.log("Sample job worker kicking");
+            if(job.name === "sampleJob") {
                 const sampleJobInstance = new sampleJob(job.data);
+
                 sampleJobInstance.handle(job);
+
                 return true;
             }
         },
@@ -17,4 +20,4 @@ export const sampleWorker = (queueName: string) => {
             connection: redisConnection
         }
     );
-};
+}

@@ -1,4 +1,5 @@
 import { Job } from "bullmq";
+
 import { IJob } from "../types/bullMqJobDefinition";
 
 class sampleJob implements IJob {
@@ -10,7 +11,10 @@ class sampleJob implements IJob {
     }
 
     handle = (job?: Job) => {
-        console.log("Handler of the job called", job);
+        console.log("Handler of the job called");
+        if (job) {
+            console.log(job.name, job.id, job.data);
+        }
     };
 
     failed = (job?: Job) => {
