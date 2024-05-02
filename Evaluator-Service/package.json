@@ -12,6 +12,7 @@
     "dev": "yarn concurrently \"yarn run watch\" \"yarn start\" "
   },
   "dependencies": {
+    "@bull-board/express": "^5.17.0",
     "@types/http-errors": "^2.0.4",
     "@types/ioredis": "^5.0.0",
     "@typescript-eslint/eslint-plugin": "^7.7.1",
