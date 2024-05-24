@@ -1,6 +1,6 @@
 import Dockerode from "dockerode";
 
-async function createContainer(imageName: string, cmdExecutable: [string]) {
+async function createContainer(imageName: string, cmdExecutable: string[]) {
     
     const Docker = new Dockerode;
 
