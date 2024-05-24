@@ -1,13 +1,22 @@
-import { testCases } from "../types/testCases";
+// import { testCases } from "../types/testCases";
 import { PYTHON_IMAGE } from "../utils/constants";
 import createContainer from "./containerFactory";
 import { decodeDockerStream } from "./dockerHelper";
+import pullImage from "./pullImage";
 
-async function runPython(code: string) {
+async function runPython(code: string, inputTestCases: string) {
 
     const rawbuffer: Buffer[] = [];
 
-    const pythonContainer = await createContainer(PYTHON_IMAGE, ['python', 'c', code, 'stty -echo']);
+    await pullImage(PYTHON_IMAGE);
+
+    const runCommand = `echo '${code.replace(/'/g, `'\\"`)}' > test.py && echo '${inputTestCases.replace(/'/g, `'\\"`)}' | python3 test.py`;
+    console.log(runCommand);
+    const pythonContainer = await createContainer(PYTHON_IMAGE, [
+        '/bin/sh', 
+        '-c',
+        runCommand
+    ]); 
     await pythonContainer.start();
 
     const loggerStream = await pythonContainer.logs({
